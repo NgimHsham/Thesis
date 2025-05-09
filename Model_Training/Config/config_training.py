@@ -2,7 +2,7 @@
 config = {
     'image_size': 224,
     'batch_size': 4,
-    'num_epochs': 100,
+    'num_epochs': 1,
     'learning_rate': 0.00001,
     'optimizer': 'Adam',
     'weight_decay': 1e-5,

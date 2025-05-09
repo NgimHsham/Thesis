@@ -32,7 +32,7 @@ print(f"Using device: {device}")
 
 # Paths and model list
 folds_dir = '/work/c-2iia/hn977782/Thesis/Code/Datasets/ISIC2020/Data_splitting/Random_patient_equal_split'
-image_dir = '/work/c-2iia/hn977782/Thesis/Code/Datasets/ISIC2020/Images'
+image_dir = '/work/c-2iia/hn977782/Thesis/Images'
 model_list = ["resnet50","densenet121"]
 
 # Training loop
