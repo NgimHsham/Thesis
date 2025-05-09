@@ -1,0 +1,5 @@
+CSV_FILE_PATH="/work/c-2iia/hn977782/Thesis/Code/Dataset/ISIC_2020_Training_GroundTruth.csv"
+CSV_FILE_PATH_DUPLICATED="/work/c-2iia/hn977782/Thesis/Code/Dataset/ISIC_2020_Training_Duplicates.csv"
+CSV_FILE_PATH_CLEANED_DATASET="/work/c-2iia/hn977782/Thesis/Code/Datasets/ISIC2020/cleaned_dataset.csv"
+TRAINING_IMAGES_PATH="/work/c-2iia/hn977782/Thesis/Code/Dataset/Skin Lesion Images/train"
+SPLITTING_STRATEGY_PATH_JSON_FILE="/work/c-2iia/hn977782/Thesis/Code/Datasets/ISIC2020/Data_splitting/Types_Of_Split.json"
