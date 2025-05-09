@@ -24,12 +24,10 @@ def main():
         # Extract configuration details
         split_folder_name = split_config["Split_Folder_Name"]
         patient_level_split = split_config["Patient_level_split"]
-        split_type = split_config["Split_Type"]
         stratified = split_config["Stratified"]
         class_equalization = split_config["Class_Equalization"]
         cross_validation = split_config["Cross_Validation_folders"]
-        validation_percentage = split_config["Validation_Percentage"]
-        plots_folder = split_config["Plots_Folder"]
+        folds_num= split_config["Folds_Num"]
         
         # Create the folder structure for this split
         os.makedirs(split_folder_name, exist_ok=True)
@@ -54,7 +52,7 @@ def main():
         # Perform cross-validation splits if required
         if cross_validation:
             print(f"Performing cross-validation splits for {split_folder_name}...")
-            folds = create_cross_validation_folds(train_df, num_folds=5, stratified=stratified,plot_folder=split_folder_name)
+            folds = create_cross_validation_folds(train_df, num_folds=folds_num, stratified=stratified,plot_folder=split_folder_name)
             save_folds_to_json(folds, split_folder_name)
         
         print(f"Split strategy completed for {split_folder_name}\n")

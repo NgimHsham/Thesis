@@ -178,6 +178,7 @@ def save_folds_to_json(folds, split_folder_name):
 
 
 import matplotlib.pyplot as plt
+import os
 
 def plot_class_distribution(train_df, test_df, split_folder_name, train_title="Training Set Class Distribution", test_title="Testing Set Class Distribution"):
     """
@@ -233,6 +234,57 @@ def plot_class_distribution(train_df, test_df, split_folder_name, train_title="T
     plt.savefig(os.path.join(split_folder_name, 'sample_distribution.png'))
     plt.close()
 
-    print(f"Class distribution and sample distribution plots saved to {split_folder_name}")
+    # 4. Number of patients in the training and testing sets
+    train_patient_count = len(train_df['patient_id'].unique())
+    test_patient_count = len(test_df['patient_id'].unique())
+    
+    plt.figure(figsize=(6, 6))
+    patient_counts = [train_patient_count, test_patient_count]
+    patient_labels = ['Training Set', 'Test/Validation Set']
+    plt.bar(patient_labels, patient_counts, color=['lightblue', 'salmon'])
+    plt.title('Number of Patients (Training vs Testing/Validation)')
+    plt.ylabel('Number of Patients')
+
+    # Annotate the bars with the number of patients
+    for i, value in enumerate(patient_counts):
+        plt.text(i, value + 1, str(value), ha='center', va='bottom', fontsize=12)
+
+    plt.savefig(os.path.join(split_folder_name, 'patient_distribution.png'))
+    plt.close()
+
+    # 5. Number of patients with benign and malignant conditions (Training vs Testing)
+
+    # Get the unique patients for each condition
+    train_benign_patients = len(train_df[train_df['benign_malignant'] == 'benign'].groupby('patient_id').size())
+    train_malignant_patients = len(train_df[train_df['benign_malignant'] == 'malignant'].groupby('patient_id').size())
+    test_benign_patients = len(test_df[test_df['benign_malignant'] == 'benign'].groupby('patient_id').size())
+    test_malignant_patients = len(test_df[test_df['benign_malignant'] == 'malignant'].groupby('patient_id').size())
+
+    # Plot the number of patients with benign and malignant conditions
+    plt.figure(figsize=(6, 6))
+    benign_malignant_counts_train = [train_benign_patients, train_malignant_patients]
+    benign_malignant_counts_test = [test_benign_patients, test_malignant_patients]
+
+    bar_width = 0.35  # Set the bar width for grouped bars
+    index = range(2)  # Two categories: benign, malignant
+
+    # Plot the bars for training and testing sets
+    plt.bar(index, benign_malignant_counts_train, bar_width, color='lightgreen', label='Training Set')
+    plt.bar([i + bar_width for i in index], benign_malignant_counts_test, bar_width, color='orange', label='Test/Validation Set')
+
+    plt.title('Number of Patients with Benign and Malignant Conditions')
+    plt.xticks([i + bar_width / 2 for i in index], ['Benign', 'Malignant'])
+    plt.ylabel('Number of Patients')
+    plt.legend()
+
+    # Annotate the bars with the number of patients
+    for i, value in enumerate(benign_malignant_counts_train):
+        plt.text(i, value + 1, str(value), ha='center', va='bottom', fontsize=12)
+    for i, value in enumerate(benign_malignant_counts_test):
+        plt.text(i + bar_width, value + 1, str(value), ha='center', va='bottom', fontsize=12)
+
+    plt.savefig(os.path.join(split_folder_name, 'benign_malignant_patient_distribution.png'))
+    plt.close()
 
 
+    print(f"Class distribution, sample distribution, patient distribution, and benign/malignant patient distribution plots saved to {split_folder_name}")
